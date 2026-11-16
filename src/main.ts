@@ -40,17 +40,29 @@ main.append(container);
 
 document.body.replaceChildren(main);
 
+let controller: AbortController | null = null;
+
 const handleSearch = debounce(async (query: string) => {
     if (!query) {
         results.replaceChildren();
         return;
     }
 
-    const countries = await searchCountries(query);
-    const mappedCountries = countries.map(mapCountryResponse);
-    const cards = mappedCountries.map(createCountryCard);
+    controller = new AbortController();
 
-    results.replaceChildren(...cards);
+    try {
+        const countries = await searchCountries(query, controller.signal);
+        const mappedCountries = countries.map(mapCountryResponse);
+        const cards = mappedCountries.map(createCountryCard);
+
+        results.replaceChildren(...cards);
+    } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+            return;
+        }
+
+        throw error;
+    }
 }, 500);
 
 searchInput.addEventListener('input', () => {
