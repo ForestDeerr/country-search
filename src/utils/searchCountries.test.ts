@@ -76,4 +76,52 @@ describe('searchCountries', () => {
 
         expect(fetchMock).toHaveBeenCalledWith('https://countries.dev/name/south%20korea', expect.any(Object));
     });
+
+    it('должна выбрасывать HttpError при статусе 500', async () => {
+        jest.spyOn(globalThis, 'fetch').mockResolvedValue(
+            new Response(null, {
+                status: 500,
+            })
+        );
+
+        await expect(searchCountries('belarus')).rejects.toMatchObject({
+            name: 'HttpError',
+            status: 500,
+        });
+    });
+
+    it('должна сохранять статус ответа в HttpError', async () => {
+        jest.spyOn(globalThis, 'fetch').mockResolvedValue(
+            new Response(null, {
+                status: 503,
+            })
+        );
+
+        await expect(searchCountries('belarus')).rejects.toMatchObject({
+            name: 'HttpError',
+            status: 503,
+        });
+    });
+
+    it('должна передавать ошибку отмены запроса', async () => {
+        const abortError = new Error('The operation was aborted');
+        abortError.name = 'AbortError';
+
+        jest.spyOn(globalThis, 'fetch').mockRejectedValue(abortError);
+
+        await expect(searchCountries('belarus')).rejects.toMatchObject({
+            name: 'AbortError',
+        });
+    });
+
+    it('должна передавать ошибку превышения времени ожидания', async () => {
+        const timeoutError = new Error('Request timed out');
+        timeoutError.name = 'TimeoutError';
+
+        jest.spyOn(globalThis, 'fetch').mockRejectedValue(timeoutError);
+
+        await expect(searchCountries('belarus')).rejects.toMatchObject({
+            name: 'TimeoutError',
+        });
+    });
 });
