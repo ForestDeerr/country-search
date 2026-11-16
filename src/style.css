@@ -6,6 +6,11 @@ body {
     background: #f4f6f8;
 }
 
+p,
+h2 {
+    margin: 0;
+}
+
 .app {
     min-height: 100vh;
     padding: 80px 20px;
@@ -39,5 +44,23 @@ body {
 }
 
 .results {
+    display: flex;
     margin-top: 32px;
+    gap: 15px;
+    flex-direction: column;
+}
+
+.country-card {
+    display: flex;
+    gap: 10px;
+}
+
+.country-flag {
+    width: 210px;
+    height: 100px;
+}
+
+.country-flag-container {
+    display: flex;
+    align-items: center;
 }
