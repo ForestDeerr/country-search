@@ -1,0 +1,55 @@
+body {
+    color: #263238;
+    background: #f4f6f8;
+    min-width: 320px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+p,
+h2 {
+    margin: 0;
+}
+.app {
+    min-height: 100vh;
+    padding: 80px 20px;
+}
+.container {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+.title {
+    text-align: center;
+    margin: 0;
+    font-size: 36px;
+}
+.description {
+    text-align: center;
+    color: #78909c;
+    margin: 12px 0 36px;
+}
+.search-container {
+    width: 100%;
+}
+.search-input {
+    width: 100%;
+    font-size: 16px;
+}
+.results {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 32px;
+    display: flex;
+}
+.country-card {
+    gap: 10px;
+    display: flex;
+}
+.country-flag {
+    width: 210px;
+    height: 100px;
+}
+.country-flag-container {
+    align-items: center;
+    display: flex;
+}
