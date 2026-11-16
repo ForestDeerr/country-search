@@ -5,7 +5,10 @@ describe('mapCountryResponse', () => {
     it('должна преобразовывать данные страны из API', () => {
         const raw = {
             name: 'Belarus',
-            flag: '🇧🇾',
+            flags: {
+                png: 'https://flagcdn.com/w320/by.png',
+                svg: 'https://flagcdn.com/by.svg',
+            },
             capital: 'Minsk',
             region: 'Europe',
             population: 9398861,
@@ -19,7 +22,7 @@ describe('mapCountryResponse', () => {
 
         expect(result).toEqual({
             name: 'Belarus',
-            flag: '🇧🇾',
+            flag: 'https://flagcdn.com/by.svg',
             capital: 'Minsk',
             region: 'Europe',
             population: 9398861,
@@ -30,7 +33,10 @@ describe('mapCountryResponse', () => {
     it('не должна изменять исходные данные', () => {
         const raw = {
             name: 'Belarus',
-            flag: '🇧🇾',
+            flags: {
+                png: 'https://flagcdn.com/w320/by.png',
+                svg: 'https://flagcdn.com/by.svg',
+            },
             capital: 'Minsk',
             region: 'Europe',
             population: 9398861,
