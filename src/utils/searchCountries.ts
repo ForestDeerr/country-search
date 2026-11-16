@@ -1,3 +1,5 @@
+import { HttpError } from './HttpError';
+
 const API_URL = 'https://countries.dev/name/';
 
 export async function searchCountries(query: string, signal?: AbortSignal) {
@@ -7,6 +9,10 @@ export async function searchCountries(query: string, signal?: AbortSignal) {
 
     if (response.status === 404) {
         return [];
+    }
+
+    if (!response.ok) {
+        throw HttpError(response.status);
     }
 
     const countries = await response.json();
