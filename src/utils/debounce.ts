@@ -1,8 +1,8 @@
-export function debounce(callback: () => void, delay: number) {
+export function debounce<T extends unknown[]>(callback: (...args: T) => void, delay: number) {
     let timer: ReturnType<typeof setTimeout>;
 
-    return () => {
+    return (...args: T) => {
         clearTimeout(timer);
-        timer = setTimeout(callback, delay);
+        timer = setTimeout(() => callback(...args), delay);
     };
 }

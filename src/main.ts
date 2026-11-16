@@ -1,5 +1,10 @@
 import './style.css';
 
+import { createCountryCard } from './create-country-card';
+import { debounce } from './utils/debounce';
+import { mapCountryResponse } from './utils/mapCountryResponse';
+import { searchCountries } from './utils/searchCountries';
+
 const main = document.querySelector<HTMLDivElement>('#app');
 
 if (!main) {
@@ -34,3 +39,20 @@ container.append(title, description, searchContainer, results);
 main.append(container);
 
 document.body.replaceChildren(main);
+
+const handleSearch = debounce(async (query: string) => {
+    if (!query) {
+        results.replaceChildren();
+        return;
+    }
+
+    const countries = await searchCountries(query);
+    const mappedCountries = countries.map(mapCountryResponse);
+    const cards = mappedCountries.map(createCountryCard);
+
+    results.replaceChildren(...cards);
+}, 500);
+
+searchInput.addEventListener('input', () => {
+    handleSearch(searchInput.value.trim());
+});
