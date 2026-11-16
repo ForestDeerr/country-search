@@ -1,13 +1,16 @@
 interface RawCountry {
     name: string;
-    flag: string;
+    flags: {
+        png: string;
+        svg: string;
+    };
     capital: string;
     region: string;
     population: number;
     languages: { name: string }[];
 }
 
-interface Country {
+export interface Country {
     name: string;
     flag: string;
     capital: string;
@@ -19,7 +22,7 @@ interface Country {
 export function mapCountryResponse(raw: RawCountry): Country {
     return {
         name: raw.name,
-        flag: raw.flag,
+        flag: raw.flags.svg,
         capital: raw.capital,
         region: raw.region,
         population: raw.population,
